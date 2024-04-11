@@ -20,17 +20,10 @@ namespace RetailProcurementSystem.Services.StoreItemService
         {
 
             var storeItems = await _storeItemRepository.GetAllAsync();
-            var dtos = storeItems
-                .Select(item => new StoreItemDTO
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Price = item.Price,
-                    Quantity = item.Quantity,
-                })
-                .ToList();
 
-            return dtos;
+            var dto = _mapper.Map<List<StoreItemDTO>>(storeItems);
+
+            return dto;
         }
 
         public async Task<StoreItem> GetStoreItem(int id)
