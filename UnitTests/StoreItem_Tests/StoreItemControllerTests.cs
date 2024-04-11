@@ -11,6 +11,7 @@ namespace RetailProcurementSystemTests.StoreItem_Tests
 {
     public class StoreItemControllerTests
     {
+
         [Fact]
         public async Task GetAllStoreItems_ReturnsOkResult_WithListOfStoreItems()
         {

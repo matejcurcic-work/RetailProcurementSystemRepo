@@ -19,12 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj" />
-    <ProjectReference Include="..\RetailProcurementSystem\RetailProcurementSystem.csproj" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Xunit" />
+    <ProjectReference Include="..\Database\Database.csproj" />
+    <ProjectReference Include="..\RetailProcurementSystem\RetailProcurementSystem.csproj" />
   </ItemGroup>
 
 </Project>

@@ -30,7 +30,6 @@ namespace RetailProcurementSystemTests.StoreItem_Tests
                 .Returns(Task.CompletedTask);
         }
 
-
         protected static DbContextOptions<ApplicationDbContext> GetInMemoryDatabase()
         {
             return new DbContextOptionsBuilder<ApplicationDbContext>()
