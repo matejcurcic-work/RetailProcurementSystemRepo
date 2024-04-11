@@ -1,5 +1,6 @@
 ﻿using Database.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -8,11 +9,11 @@ namespace RetailProcurementSystem.Controllers
 {
     public class AuthController : ControllerBase
     {
-        private readonly IConfiguration _config;
+        private readonly IOptions<JwtOptions> _jwtOptions;
 
-        public AuthController(IConfiguration config)
+        public AuthController(IOptions<JwtOptions> jwtOptions)
         {
-            _config = config;
+            _jwtOptions = jwtOptions;
         }
 
         [HttpPost, Route("login")]
@@ -23,17 +24,19 @@ namespace RetailProcurementSystem.Controllers
                 return BadRequest("Invalid client request");
             }
 
-            var username = _config["TokenDummyData:Username"];
-            var password = _config["TokenDummyData:Password"];
+            var username = _jwtOptions.Value.Username;
+            var password = _jwtOptions.Value.Password;
+            var jwtKey = _jwtOptions.Value.Key;
+            var jwtIssuer = _jwtOptions.Value.Issuer;
 
             if (model.UserName == username && model.Password == password)
             {
-                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
                 var Sectoken = new JwtSecurityToken(
-                    _config["Jwt:Issuer"],
-                    _config["Jwt:Issuer"],
+                    jwtIssuer,
+                    jwtIssuer,
                     null,
                     expires: DateTime.Now.AddMinutes(120),
                     signingCredentials: credentials);

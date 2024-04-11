@@ -103,6 +103,7 @@ builder.Services.AddScoped<ISupplierStoreItemService, SupplierStoreItemService>(
 
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 
+builder.Services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
 
 var app = builder.Build();
 
